@@ -27,6 +27,7 @@ function render(){
 render(); //YAY I REMEMBERED
 
 function renderMonster(){
+    mc.innerHTML = ''
     // displays the monsters
     monsters.forEach(monster => {
          let name = document.createElement('h2')
@@ -54,7 +55,30 @@ function renderMonster(){
     let button = c('button')
     button.innerText = "Create"
     form.append(name, age, desc, button)
-  
+
+    //button click
+    button.addEventListener('click', (e) => {
+        // console.log(form.name.value)
+        e.preventDefault()
+        let mon = {
+            name: form.name.value,
+            age: form.age.value,
+            description: form.description.value
+        }
+        
+        fetch('http://localhost:3000/monsters', {
+            
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json',
+                Accept: "application/json"
+            },
+            body: JSON.stringify(mon)
+            
+        })
+        .then(render)
+    })
+    
 
 
  
